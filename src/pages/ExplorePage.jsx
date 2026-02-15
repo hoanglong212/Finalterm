@@ -6,7 +6,7 @@ export default function ExplorePage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}db.json`)
+    fetch('http://localhost:3000/blogs')
       .then((res) => res.json())
       .then((data) => {
         if (data?.blogs) {

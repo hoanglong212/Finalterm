@@ -5,7 +5,7 @@ export default function ExplorePage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch('${import.meta.env.BASE_URL}blogs.json')
+    fetch(`${import.meta.env.BASE_URL}blogs.json`)
       .then((res) => res.json())
       .then((data) => {
         const sorted = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

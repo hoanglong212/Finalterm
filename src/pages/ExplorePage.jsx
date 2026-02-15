@@ -6,31 +6,19 @@ export default function ExplorePage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}db.json`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.blogs) {
-          const sorted = [...data.blogs].sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          )
-          setBlogs(sorted)
-        }
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false))
+    const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || []
+
+    const sorted = storedBlogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+
+    setBlogs(sorted)
   }, [])
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>
-  }
-
-  if (blogs.length === 0) {
-    return <div className="min-h-screen flex items-center justify-center">No blogs found</div>
-  }
 
   const featured = blogs[0]
   const secondary = blogs.slice(1, 4)
   const others = blogs.slice(4)
+  if (blogs.length === 0) {
+    return <div className="min-h-screen flex items-center justify-center">No blogs yet</div>
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen text-black  ">

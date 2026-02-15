@@ -4,16 +4,15 @@ export default function ExplorePage() {
   const [blogs, setBlogs] = useState([])
   const navigate = useNavigate()
 
-  fetch(`${import.meta.env.BASE_URL}db.json`)
-    .then((res) => res.json())
-    .then((data) => {
-      const sorted = data.blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      setBlogs(sorted)
-    })
-
-  if (!blogs.length) {
-    return <div className="text-center py-20">Loading...</div>
-  }
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}db.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        const sorted = data.blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        setBlogs(sorted)
+      })
+      .catch((err) => console.error(err))
+  }, [])
 
   // Sort theo mới nhất
   const sortedBlogs = [...blogs].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

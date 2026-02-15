@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { createBlog } from '../Blogaction'
 import PreviewModal from '../components/PreviewModal'
 import { BLOG_CATEGORIES } from '../constants/categories'
+import { logout } from '../auth'
 
 const inputClass =
   'w-full border-2 border-black px-6 py-5 bg-white text-lg outline-none focus:border-red-600'
@@ -60,7 +61,10 @@ export default function WriteBlog() {
     <div className="min-h-screen bg-gray-100 px-6 py-16 text-black">
       <div className="max-w-4xl mx-auto">
         <button
-          onClick={() => navigate('/')}
+          onClick={() => {
+            navigate('/')
+            logout
+          }}
           className="mb-10 text-red-600 hover:text-red-700 tracking-widest font-medium"
         >
           ← BACK TO HOME

@@ -4,7 +4,7 @@ const POINTS = [
   { title: 'Inclusive', desc: 'Diverse voices and perspectives from around the globe' },
 ]
 
-// Inline SVG placeholder — no network request, no 404. Replace with <img src="/mission.jpg" /> when you add public/mission.jpg
+// Inline SVG — no image request, no 404. To use a photo, add public/mission.jpg and use <img src="/mission.jpg" alt="Our mission" className="w-full h-auto grayscale object-cover min-h-[280px]" />
 const MissionPlaceholder = () => (
   <div className="w-full min-h-[280px] bg-gray-200 flex items-center justify-center grayscale">
     <svg

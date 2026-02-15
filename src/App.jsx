@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom'
-import HomePage from './pages/Home'
+import HomePage from './pages/home'
 import ExplorePage from './pages/ExplorePage'
 import WriteBlog from './pages/Writeblog'
 import LoginPage from './pages/LoginPage'

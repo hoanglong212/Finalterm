@@ -141,7 +141,8 @@ export default function HomePage() {
           {/* Image */}
           <div>
             <img
-              src="mission.jpg"
+              src="<img src={`${import.meta.env.BASE_URL}mission.jpg`} />
+"
               alt="Our mission"
               className="w-full h-auto grayscale object-cover "
             />

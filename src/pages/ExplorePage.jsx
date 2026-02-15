@@ -20,6 +20,9 @@ export default function ExplorePage() {
   const featured = sortedBlogs[0]
   const secondary = sortedBlogs.slice(1, 4)
   const others = sortedBlogs.slice(4)
+  if (!featured) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen text-black  ">

@@ -1,7 +1,7 @@
 export async function createBlog(blog, isPublish) {
   if (isPublish) {
     try {
-      const res = await fetch('http://localhost:3000/blogs', {
+      const res = await fetch(`${import.meta.env.BASE_URL}db.json`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

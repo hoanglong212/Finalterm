@@ -141,7 +141,7 @@ export default function HomePage() {
           {/* Image */}
           <div>
             <img
-              src={`mission.jpg`}
+              src={`C:\aptech\React for Modern Web Development\Finalterm\dist\mission.jpg`}
               alt="Our mission"
               className="w-full h-auto grayscale object-cover "
             />

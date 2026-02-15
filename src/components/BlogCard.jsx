@@ -3,24 +3,22 @@
  */
 export default function BlogCard({ blog, variant = 'grid' }) {
   if (variant === 'featured') {
-    return (
-      <>
-        <div className="md:col-span-2">
-          {blog.thumbnail && (
-            <img
-              src={blog.thumbnail}
-              alt={blog.title}
-              className="w-full h-[450px] object-cover"
-            />
-          )}
-        </div>
-        <div className="flex flex-col justify-center">
-          <p className="text-sm text-red-600 font-semibold mb-2 uppercase">{blog.category}</p>
-          <h2 className="text-3xl font-bold mb-4 leading-snug">{blog.title}</h2>
-          <p className="text-gray-600 line-clamp-4">{blog.content}</p>
-        </div>
-      </>
-    )
+    return [
+      <div key="img" className="md:col-span-2">
+        {blog.thumbnail && (
+          <img
+            src={blog.thumbnail}
+            alt={blog.title}
+            className="w-full h-[450px] object-cover"
+          />
+        )}
+      </div>,
+      <div key="text" className="flex flex-col justify-center">
+        <p className="text-sm text-red-600 font-semibold mb-2 uppercase">{blog.category}</p>
+        <h2 className="text-3xl font-bold mb-4 leading-snug">{blog.title}</h2>
+        <p className="text-gray-600 line-clamp-4">{blog.content}</p>
+      </div>,
+    ]
   }
 
   if (variant === 'secondary') {

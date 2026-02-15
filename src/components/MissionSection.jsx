@@ -7,7 +7,7 @@ const POINTS = [
 // Inline SVG — no image request, no 404. To use a photo, add public/mission.jpg and use <img src="/mission.jpg" alt="Our mission" className="w-full h-auto grayscale object-cover min-h-[280px]" />
 const MissionPlaceholder = () => (
   <div className="w-full min-h-[280px] bg-gray-200 flex items-center justify-center grayscale">
-      <img
+    <img
       src="/mission.jpg"
       alt="Our mission"
       className="w-full h-auto min-h-[280px] object-cover"
@@ -26,8 +26,8 @@ export default function MissionSection() {
         </div>
         <p className="text-gray-700 leading-relaxed mb-6">
           At The Honest Stories Teller, we believe in the power of truth and the importance of
-          honest journalism. Our mission is to deliver stories that inform, inspire, and
-          challenge perspectives.
+          honest journalism. Our mission is to deliver stories that inform, inspire, and challenge
+          perspectives.
         </p>
         <p className="text-gray-700 leading-relaxed mb-10">
           We are committed to upholding the highest standards of journalistic integrity, giving

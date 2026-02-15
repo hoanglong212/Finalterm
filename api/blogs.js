@@ -11,6 +11,21 @@ export default function handler(req, res) {
       return res.status(200).json(data)
     }
 
+    if (req.method === 'POST') {
+      const newBlog = {
+        ...req.body,
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }
+
+      data.blogs.push(newBlog)
+
+      fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
+
+      return res.status(200).json(newBlog)
+    }
+
     return res.status(405).json({ message: 'Method not allowed' })
   } catch (error) {
     return res.status(500).json({ error: error.message })

@@ -17,23 +17,20 @@ export default function ExplorePage() {
       }
     }
 
-    // Load static db.json first (always has content when deployed). API is in-memory and often empty on Vercel/cold start.
-    const loadFromStatic = () =>
-      fetch('/db.json')
-        .then((res) => (res.ok ? res.json() : Promise.reject(new Error('No static data'))))
-        .then(applyBlogs)
-        .catch(() => {})
-
-    // Optionally merge in API blogs (e.g. newly published in same session locally)
-    const loadFromApi = () =>
-      fetch('/api/blogs')
-        .then((res) => (res.ok ? res.json() : Promise.reject(new Error('API error'))))
-        .then((data) => {
-          if (data?.blogs?.length) applyBlogs(data)
-        })
-        .catch(() => {})
-
-    Promise.all([loadFromStatic(), loadFromApi()]).finally(() => setLoading(false))
+    // 1) Always try static first (bundled with the app — no 404 when deployed). API is in-memory and empty on Vercel.
+    fetch('/db.json')
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('No static data'))))
+      .then((data) => {
+        if (data?.blogs?.length) applyBlogs(data)
+      })
+      .catch(() => {
+        // 2) Fallback to API only if static failed (e.g. local dev without public/db.json)
+        return fetch('/api/blogs')
+          .then((res) => (res.ok ? res.json() : Promise.reject(new Error('API error'))))
+          .then(applyBlogs)
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const featured = blogs[0]

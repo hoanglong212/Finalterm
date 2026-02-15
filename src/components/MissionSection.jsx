@@ -4,21 +4,30 @@ const POINTS = [
   { title: 'Inclusive', desc: 'Diverse voices and perspectives from around the globe' },
 ]
 
-const MISSION_IMAGE_SRC = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'
+// Inline SVG placeholder — no network request, no 404. Replace with <img src="/mission.jpg" /> when you add public/mission.jpg
+const MissionPlaceholder = () => (
+  <div className="w-full min-h-[280px] bg-gray-200 flex items-center justify-center grayscale">
+    <svg
+      className="w-full h-auto min-h-[280px] object-cover"
+      viewBox="0 0 800 400"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+    >
+      <rect width="800" height="400" fill="#e5e7eb" />
+      <path
+        d="M200 120h400v24H200V120zm0 56h400v24H200v-24zm0 56h280v24H200v-24z"
+        fill="#9ca3af"
+      />
+      <circle cx="400" cy="280" r="48" stroke="#9ca3af" strokeWidth="2" fill="none" />
+    </svg>
+  </div>
+)
 
 export default function MissionSection() {
   return (
     <section className="max-w-6xl mx-auto px-6 py-32 grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-      <div className="min-h-[280px] bg-gray-200">
-        <img
-          src={MISSION_IMAGE_SRC}
-          alt="Our mission — journalism and storytelling"
-          className="w-full h-auto grayscale object-cover min-h-[280px]"
-          onError={(e) => {
-            e.currentTarget.style.display = 'none'
-          }}
-        />
-      </div>
+      <MissionPlaceholder />
       <div>
         <div className="flex items-center gap-3 mb-6">
           <span className="w-2 h-2 bg-red-600" />

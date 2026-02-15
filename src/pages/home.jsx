@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import SubscribeForm from '../Register'
+import mission from '../assets/mission.jpg'
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-black font-serif">

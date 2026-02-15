@@ -6,16 +6,24 @@ export default function ExplorePage() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    const applyBlogs = (data) => {
+      if (data?.blogs?.length) {
+        const published = data.blogs.filter((b) => b.status === 'published')
+        const sorted = [...published].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
+        setBlogs(sorted)
+      }
+    }
+
     fetch('/api/blogs')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.blogs) {
-          const sorted = [...data.blogs].sort(
-            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-          )
-          setBlogs(sorted)
-        }
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('API error'))))
+      .then(applyBlogs)
+      .catch(() => {
+        // Fallback: load from static db.json (when API server is not running)
+        return fetch('/db.json').then((res) => res.json())
       })
+      .then(applyBlogs)
       .catch(console.error)
       .finally(() => setLoading(false))
   }, [])
@@ -23,12 +31,24 @@ export default function ExplorePage() {
   const featured = blogs[0]
   const secondary = blogs.slice(1, 4)
   const others = blogs.slice(4)
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center text-black">
+        <p className="text-lg">Loading stories...</p>
+      </div>
+    )
+  }
   if (blogs.length === 0) {
-    return <div className="min-h-screen flex items-center justify-center">No blogs yet</div>
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center text-black">
+        <p className="text-lg">No blogs yet.</p>
+      </div>
+    )
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen text-black  ">
+    <div className="bg-gray-100 min-h-screen text-black">
       {/* HEADER */}
       <header className="border-b">
         <div className="max-w-6xl mx-auto px-6 py-6 text-center">
@@ -64,14 +84,14 @@ export default function ExplorePage() {
 
       <div className="max-w-7xl mx-auto px-6 py-10">
         {/* TOP SECTION */}
-        <div className="grid md:grid-cols-3 gap-8 border-b border-black pb-10  ">
+        <div className="grid md:grid-cols-3 gap-8 border-b border-black pb-10">
           {/* FEATURED IMAGE */}
           <div className="md:col-span-2">
             {featured.thumbnail && (
               <img
                 src={featured.thumbnail}
                 alt={featured.title}
-                className="w-full h-[450px] object-cover  "
+                className="w-full h-[450px] object-cover"
               />
             )}
           </div>

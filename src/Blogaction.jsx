@@ -6,16 +6,16 @@ export async function createBlog(blog, isPublish) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(blog),
       })
-
       if (!res.ok) {
         throw new Error('Failed to publish blog')
       }
-
       alert('Blog published!')
+      return true
     } catch (err) {
       alert(err.message)
+      return false
     }
-  } else {
-    alert('Draft saved (local only)')
   }
+  alert('Draft saved (local only)')
+  return true
 }

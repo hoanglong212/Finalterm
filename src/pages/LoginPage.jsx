@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../auth'
-import { Link } from 'lucide-react'
 
 export default function LoginPage() {
   const navigate = useNavigate()

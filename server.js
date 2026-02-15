@@ -1,7 +1,25 @@
 import http from 'node:http'
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-const blogs = []
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const PORT = 3001
+const DB_PATH = path.join(__dirname, 'db.json')
+
+function loadDb() {
+  try {
+    const data = fs.readFileSync(DB_PATH, 'utf-8')
+    return JSON.parse(data)
+  } catch (err) {
+    console.warn('Could not load db.json:', err.message)
+    return { blogs: [] }
+  }
+}
+
+function saveDb(data) {
+  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8')
+}
 
 function parseBody(req) {
   return new Promise((resolve, reject) => {
@@ -37,13 +55,15 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (req.method === 'GET') {
+    const db = loadDb()
     res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.end(JSON.stringify({ blogs }))
+    res.end(JSON.stringify({ blogs: db.blogs || [] }))
     return
   }
 
   if (req.method === 'POST') {
     try {
+      const db = loadDb()
       const body = await parseBody(req)
       const newBlog = {
         ...body,
@@ -51,7 +71,9 @@ const server = http.createServer(async (req, res) => {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       }
-      blogs.push(newBlog)
+      db.blogs = db.blogs || []
+      db.blogs.push(newBlog)
+      saveDb(db)
       res.writeHead(200, { 'Content-Type': 'application/json' })
       res.end(JSON.stringify(newBlog))
     } catch (err) {
@@ -66,5 +88,7 @@ const server = http.createServer(async (req, res) => {
 })
 
 server.listen(PORT, () => {
-  console.log(`API server running at http://localhost:${PORT}/api/blogs`)
+  const db = loadDb()
+  const count = db.blogs?.length ?? 0
+  console.log(`API server running at http://localhost:${PORT}/api/blogs (${count} blogs from db.json)`)
 })

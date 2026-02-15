@@ -1,5 +1,10 @@
 export function getUser() {
-  return JSON.parse(localStorage.getItem('currentUser'))
+  try {
+    const raw = localStorage.getItem('currentUser')
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
+  }
 }
 
 export function login(user) {

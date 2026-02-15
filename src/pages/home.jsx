@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import SubscribeForm from '../Register'
-import mission from '../assets/mission.jpg'
 
 export default function HomePage() {
   return (
@@ -8,21 +7,12 @@ export default function HomePage() {
       {/* Header */}
       <header className="border-b">
         <div className="max-w-6xl mx-auto px-6 py-6 text-center">
-          <h1
-            className="
-    text-5xl md:text-6xl
-    font-EnglishTowney
-    text-red-700
-    tracking-wide
-    cursor-pointer
-    transition duration-300
-    hover:scale-105
-    hover:text-black
-  "
-            onClick={() => navigate('/')}
+          <Link
+            to="/"
+            className="block text-5xl md:text-6xl font-EnglishTowney text-red-700 tracking-wide cursor-pointer transition duration-300 hover:scale-105 hover:text-black"
           >
             The Honest Stories Teller
-          </h1>
+          </Link>
         </div>
         <nav className="border-t">
           <ul className="flex justify-center gap-8 py-4 text-sm tracking-widest uppercase ">
@@ -214,7 +204,7 @@ export default function HomePage() {
               insights, and weekly newsletters.
             </p>
 
-            <SubscribeForm></SubscribeForm>
+            <SubscribeForm />
 
             <div className="border-t border-gray-700 my-20"></div>
 

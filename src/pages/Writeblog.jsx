@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createBlog } from '../Blogaction'
-import { logout } from '../auth'
 
 export default function WriteBlog() {
   const navigate = useNavigate()
@@ -49,9 +48,13 @@ export default function WriteBlog() {
       updatedAt: new Date().toISOString(),
     }
 
-    await createBlog(blog, status === 'published')
+    const success = await createBlog(blog, status === 'published')
+    if (success && status === 'published') {
+      navigate('/explore')
+      return
+    }
 
-    // reset form
+    // Reset form
     setTitle('')
     setCategory('')
     setThumbnail('')
@@ -70,10 +73,7 @@ export default function WriteBlog() {
         {/* Back */}
         <div className="flex justify-between">
           <button
-            onClick={() => {
-              logout()
-              navigate('/')
-            }}
+            onClick={() => navigate('/')}
             className="mb-10 text-red-600 hover:text-red-700 tracking-widest font-medium"
           >
             ← BACK TO HOME
@@ -201,7 +201,7 @@ export default function WriteBlog() {
           </button>
         </div>
 
-        {/* Preview Modal giữ nguyên logic */}
+        {/* Preview modal */}
         {showPreview && (
           <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-6">
             <div className="bg-white text-black max-w-3xl w-full max-h-[90vh] overflow-y-auto p-10 relative">

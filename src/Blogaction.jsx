@@ -1,7 +1,7 @@
 export async function createBlog(blog, isPublish) {
   if (isPublish) {
     try {
-      await fetch('/api/blogs', {
+      const res = await fetch('/api/blogs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(blog),

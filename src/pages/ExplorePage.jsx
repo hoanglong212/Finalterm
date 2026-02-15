@@ -4,14 +4,12 @@ export default function ExplorePage() {
   const [blogs, setBlogs] = useState([])
   const navigate = useNavigate()
 
-  useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}blogs.json`)
-      .then((res) => res.json())
-      .then((data) => {
-        const sorted = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        setBlogs(sorted)
-      })
-  }, [])
+  fetch(`${import.meta.env.BASE_URL}db.json`)
+    .then((res) => res.json())
+    .then((data) => {
+      const sorted = data.blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      setBlogs(sorted)
+    })
 
   if (!blogs.length) {
     return <div className="text-center py-20">Loading...</div>

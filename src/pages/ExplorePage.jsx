@@ -2,28 +2,35 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 export default function ExplorePage() {
   const [blogs, setBlogs] = useState([])
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}db.json`)
       .then((res) => res.json())
       .then((data) => {
-        const sorted = data.blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        setBlogs(sorted)
+        if (data?.blogs) {
+          const sorted = [...data.blogs].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          )
+          setBlogs(sorted)
+        }
       })
-      .catch((err) => console.error(err))
+      .catch(console.error)
+      .finally(() => setLoading(false))
   }, [])
 
-  // Sort theo mới nhất
-  const sortedBlogs = [...blogs].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-
-  const featured = blogs.length > 0 ? blogs[0] : null
-  const secondary = blogs.length > 1 ? blogs.slice(1, 4) : []
-  const others = blogs.length > 4 ? blogs.slice(4) : []
-
-  if (!featured) {
+  if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>
   }
+
+  if (blogs.length === 0) {
+    return <div className="min-h-screen flex items-center justify-center">No blogs found</div>
+  }
+
+  const featured = blogs[0]
+  const secondary = blogs.slice(1, 4)
+  const others = blogs.slice(4)
 
   return (
     <div className="bg-gray-100 min-h-screen text-black  ">

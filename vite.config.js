@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: '/react-blog/', // 👈 sửa ở đây
+  base: '/Finalterm/',
+
   plugins: [
     react({
       babel: {

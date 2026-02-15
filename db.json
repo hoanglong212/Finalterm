@@ -1,0 +1,244 @@
+{
+  "blogs": [
+    {
+      "id": "1001",
+      "title": "Global Markets Rally After Fed Announcement",
+      "category": "Business",
+      "thumbnail": "https://picsum.photos/600/400?random=1",
+      "content": "Stock markets surged worldwide after the Federal Reserve signaled rate cuts later this year.",
+      "status": "published",
+      "createdAt": "2026-02-10T08:00:00.000Z",
+      "updatedAt": "2026-02-10T08:00:00.000Z"
+    },
+    {
+      "id": "1002",
+      "title": "New Education Reform Bill Passed",
+      "category": "Education",
+      "thumbnail": "https://picsum.photos/600/400?random=2",
+      "content": "Lawmakers approved sweeping changes to the national education system.",
+      "status": "published",
+      "createdAt": "2026-02-10T09:00:00.000Z",
+      "updatedAt": "2026-02-10T09:00:00.000Z"
+    },
+    {
+      "id": "1003",
+      "title": "Champions League: Late Winner Shocks Fans",
+      "category": "Sport",
+      "thumbnail": "https://picsum.photos/600/400?random=3",
+      "content": "A dramatic last-minute goal secured victory in a thrilling semifinal clash.",
+      "status": "published",
+      "createdAt": "2026-02-11T10:00:00.000Z",
+      "updatedAt": "2026-02-11T10:00:00.000Z"
+    },
+    {
+      "id": "1004",
+      "title": "Top 10 Travel Destinations for 2026",
+      "category": "Travel",
+      "thumbnail": "https://picsum.photos/600/400?random=4",
+      "content": "Explore the most breathtaking destinations to visit this year.",
+      "status": "published",
+      "createdAt": "2026-02-11T11:00:00.000Z",
+      "updatedAt": "2026-02-11T11:00:00.000Z"
+    },
+    {
+      "id": "1005",
+      "title": "AI Revolutionizing Healthcare Industry",
+      "category": "Health",
+      "thumbnail": "https://picsum.photos/600/400?random=5",
+      "content": "Artificial Intelligence is transforming diagnosis and treatment worldwide.",
+      "status": "published",
+      "createdAt": "2026-02-12T07:00:00.000Z",
+      "updatedAt": "2026-02-12T07:00:00.000Z"
+    },
+    {
+      "id": "1006",
+      "title": "World Leaders Meet for Climate Summit",
+      "category": "World",
+      "thumbnail": "https://picsum.photos/600/400?random=6",
+      "content": "Nations gathered to discuss urgent climate change strategies.",
+      "status": "published",
+      "createdAt": "2026-02-12T08:00:00.000Z",
+      "updatedAt": "2026-02-12T08:00:00.000Z"
+    },
+    {
+      "id": "1007",
+      "title": "Celebrity Couple Announces Engagement",
+      "category": "Showbiz",
+      "thumbnail": "https://picsum.photos/600/400?random=7",
+      "content": "The entertainment world is buzzing with excitement after the big news.",
+      "status": "published",
+      "createdAt": "2026-02-12T09:00:00.000Z",
+      "updatedAt": "2026-02-12T09:00:00.000Z"
+    },
+    {
+      "id": "1008",
+      "title": "Startup Raises $50M in Series B Funding",
+      "category": "Business",
+      "thumbnail": "https://picsum.photos/600/400?random=8",
+      "content": "Investors show strong confidence in emerging fintech company.",
+      "status": "published",
+      "createdAt": "2026-02-13T07:00:00.000Z",
+      "updatedAt": "2026-02-13T07:00:00.000Z"
+    },
+    {
+      "id": "1009",
+      "title": "Healthy Lifestyle Tips for Busy Professionals",
+      "category": "Lifestyle",
+      "thumbnail": "https://picsum.photos/600/400?random=9",
+      "content": "Simple habits that can dramatically improve your wellbeing.",
+      "status": "published",
+      "createdAt": "2026-02-13T08:00:00.000Z",
+      "updatedAt": "2026-02-13T08:00:00.000Z"
+    },
+    {
+      "id": "1010",
+      "title": "Breakthrough in Cancer Research Announced",
+      "category": "Health",
+      "thumbnail": "https://picsum.photos/600/400?random=10",
+      "content": "Scientists revealed promising results from new treatment trials.",
+      "status": "published",
+      "createdAt": "2026-02-14T07:00:00.000Z",
+      "updatedAt": "2026-02-14T07:00:00.000Z"
+    },
+    {
+      "id": "1011",
+      "title": "Tech Giants Compete in AI Arms Race",
+      "category": "Technology",
+      "thumbnail": "https://picsum.photos/600/400?random=11",
+      "content": "Major companies are investing billions in artificial intelligence research.",
+      "status": "published",
+      "createdAt": "2026-02-14T09:00:00.000Z",
+      "updatedAt": "2026-02-14T09:00:00.000Z"
+    },
+    {
+      "id": "1012",
+      "title": "Historic Peace Agreement Signed",
+      "category": "World",
+      "thumbnail": "https://picsum.photos/600/400?random=12",
+      "content": "Two neighboring nations reached a long-awaited diplomatic breakthrough.",
+      "status": "published",
+      "createdAt": "2026-02-15T07:00:00.000Z",
+      "updatedAt": "2026-02-15T07:00:00.000Z"
+    },
+    {
+      "id": "1013",
+      "title": "Oil Prices Climb Amid Global Tensions",
+      "category": "Business",
+      "thumbnail": "https://picsum.photos/600/400?random=13",
+      "content": "Energy markets reacted strongly to rising geopolitical uncertainty.",
+      "status": "published",
+      "createdAt": "2026-02-15T08:00:00.000Z",
+      "updatedAt": "2026-02-15T08:00:00.000Z"
+    },
+    {
+      "id": "1014",
+      "title": "New Vaccine Shows Promising Results",
+      "category": "Health",
+      "thumbnail": "https://picsum.photos/600/400?random=14",
+      "content": "Early clinical trials indicate strong immune response in patients.",
+      "status": "published",
+      "createdAt": "2026-02-15T09:00:00.000Z",
+      "updatedAt": "2026-02-15T09:00:00.000Z"
+    },
+    {
+      "id": "1015",
+      "title": "Olympic Committee Announces Host City",
+      "category": "Sport",
+      "thumbnail": "https://picsum.photos/600/400?random=15",
+      "content": "The international sporting event will be hosted in a major European capital.",
+      "status": "published",
+      "createdAt": "2026-02-15T10:00:00.000Z",
+      "updatedAt": "2026-02-15T10:00:00.000Z"
+    },
+    {
+      "id": "1016",
+      "title": "Remote Work Trends Continue in 2026",
+      "category": "Business",
+      "thumbnail": "https://picsum.photos/600/400?random=16",
+      "content": "Companies worldwide are adapting to hybrid workplace models.",
+      "status": "published",
+      "createdAt": "2026-02-15T11:00:00.000Z",
+      "updatedAt": "2026-02-15T11:00:00.000Z"
+    },
+    {
+      "id": "1017",
+      "title": "Breakthrough in Renewable Energy Storage",
+      "category": "Technology",
+      "thumbnail": "https://picsum.photos/600/400?random=17",
+      "content": "Scientists developed longer-lasting battery solutions.",
+      "status": "published",
+      "createdAt": "2026-02-15T12:00:00.000Z",
+      "updatedAt": "2026-02-15T12:00:00.000Z"
+    },
+    {
+      "id": "1018",
+      "title": "University Rankings Released for 2026",
+      "category": "Education",
+      "thumbnail": "https://picsum.photos/600/400?random=18",
+      "content": "Top institutions maintained dominance in global rankings.",
+      "status": "published",
+      "createdAt": "2026-02-15T13:00:00.000Z",
+      "updatedAt": "2026-02-15T13:00:00.000Z"
+    },
+    {
+      "id": "1019",
+      "title": "Luxury Travel Demand Surges Post Pandemic",
+      "category": "Travel",
+      "thumbnail": "https://picsum.photos/600/400?random=19",
+      "content": "High-end tourism sees record bookings worldwide.",
+      "status": "published",
+      "createdAt": "2026-02-15T14:00:00.000Z",
+      "updatedAt": "2026-02-15T14:00:00.000Z"
+    },
+    {
+      "id": "1020",
+      "title": "Global Food Crisis Raises Concerns",
+      "category": "World",
+      "thumbnail": "https://picsum.photos/600/400?random=20",
+      "content": "International agencies warn of supply shortages in vulnerable regions.",
+      "status": "published",
+      "createdAt": "2026-02-15T15:00:00.000Z",
+      "updatedAt": "2026-02-15T15:00:00.000Z"
+    },
+    {
+      "id": "1021",
+      "title": "Mental Health Awareness Campaign Expands",
+      "category": "Health",
+      "thumbnail": "https://picsum.photos/600/400?random=21",
+      "content": "Communities worldwide launch initiatives to support wellbeing.",
+      "status": "published",
+      "createdAt": "2026-02-15T16:00:00.000Z",
+      "updatedAt": "2026-02-15T16:00:00.000Z"
+    },
+    {
+      "id": "1022",
+      "title": "Fashion Week Highlights Emerging Designers",
+      "category": "Showbiz",
+      "thumbnail": "https://picsum.photos/600/400?random=22",
+      "content": "New creative talents captivated audiences on the runway.",
+      "status": "published",
+      "createdAt": "2026-02-15T17:00:00.000Z",
+      "updatedAt": "2026-02-15T17:00:00.000Z"
+    },
+    {
+      "id": "1023",
+      "title": "Space Agency Plans New Moon Mission",
+      "category": "Technology",
+      "thumbnail": "https://picsum.photos/600/400?random=23",
+      "content": "A new lunar exploration program aims for a 2028 launch.",
+      "status": "published",
+      "createdAt": "2026-02-15T18:00:00.000Z",
+      "updatedAt": "2026-02-15T18:00:00.000Z"
+    },
+    {
+      "id": "1024",
+      "title": "Global Tourism Revenue Hits Record High",
+      "category": "Travel",
+      "thumbnail": "https://picsum.photos/600/400?random=24",
+      "content": "International travel spending surpassed pre-pandemic levels.",
+      "status": "published",
+      "createdAt": "2026-02-15T19:00:00.000Z",
+      "updatedAt": "2026-02-15T19:00:00.000Z"
+    }
+  ]
+}

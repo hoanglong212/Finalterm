@@ -7,20 +7,11 @@ const POINTS = [
 // Inline SVG — no image request, no 404. To use a photo, add public/mission.jpg and use <img src="/mission.jpg" alt="Our mission" className="w-full h-auto grayscale object-cover min-h-[280px]" />
 const MissionPlaceholder = () => (
   <div className="w-full min-h-[280px] bg-gray-200 flex items-center justify-center grayscale">
-    <svg
+      <img
+      src="/mission.jpg"
+      alt="Our mission"
       className="w-full h-auto min-h-[280px] object-cover"
-      viewBox="0 0 800 400"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <rect width="800" height="400" fill="#e5e7eb" />
-      <path
-        d="M200 120h400v24H200V120zm0 56h400v24H200v-24zm0 56h280v24H200v-24z"
-        fill="#9ca3af"
-      />
-      <circle cx="400" cy="280" r="48" stroke="#9ca3af" strokeWidth="2" fill="none" />
-    </svg>
+    />
   </div>
 )
 

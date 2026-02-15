@@ -4,14 +4,19 @@ const POINTS = [
   { title: 'Inclusive', desc: 'Diverse voices and perspectives from around the globe' },
 ]
 
+const MISSION_IMAGE_SRC = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'
+
 export default function MissionSection() {
   return (
     <section className="max-w-6xl mx-auto px-6 py-32 grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-      <div>
+      <div className="min-h-[280px] bg-gray-200">
         <img
-          src="/mission.jpg"
-          alt="Our mission"
-          className="w-full h-auto grayscale object-cover"
+          src={MISSION_IMAGE_SRC}
+          alt="Our mission — journalism and storytelling"
+          className="w-full h-auto grayscale object-cover min-h-[280px]"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none'
+          }}
         />
       </div>
       <div>

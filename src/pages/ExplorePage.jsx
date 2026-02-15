@@ -6,36 +6,26 @@ export default function ExplorePage() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const res = await fetch('/api/blogs')
-
-        const data = await res.json()
-
-        const sorted = [...data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-
-        setBlogs(sorted)
-      } catch (error) {
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchBlogs()
+    fetch(`${import.meta.env.BASE_URL}db.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.blogs) {
+          const sorted = [...data.blogs].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          )
+          setBlogs(sorted)
+        }
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false))
   }, [])
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>
-  }
-
-  if (blogs.length === 0) {
-    return <div className="min-h-screen flex items-center justify-center">No blogs found</div>
-  }
 
   const featured = blogs[0]
   const secondary = blogs.slice(1, 4)
   const others = blogs.slice(4)
+  if (blogs.length === 0) {
+    return <div className="min-h-screen flex items-center justify-center">No blogs yet</div>
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen text-black  ">

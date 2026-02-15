@@ -5,31 +5,36 @@ import WriteBlog from './pages/Writeblog'
 import LoginPage from './pages/LoginPage'
 import { getUser } from './auth'
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/explore',
-    element: <ExplorePage />,
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/write',
-    element: <WriteBlog />,
-    loader: () => {
-      const user = getUser()
-      if (!user) {
-        return redirect('/login')
-      }
-      return null
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <HomePage />,
     },
-  },
-])
+    {
+      path: '/explore',
+      element: <ExplorePage />,
+    },
+    {
+      path: '/login',
+      element: <LoginPage />,
+    },
+    {
+      path: '/write',
+      element: <WriteBlog />,
+      loader: () => {
+        const user = getUser()
+        if (!user) {
+          return redirect('/login')
+        }
+        return null
+      },
+    },
+  ],
+  {
+    basename: '/Finalterm/', // 👈 QUAN TRỌNG
+  }
+)
 
 function App() {
   return <RouterProvider router={router} />

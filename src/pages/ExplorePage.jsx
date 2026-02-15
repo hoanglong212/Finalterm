@@ -17,26 +17,23 @@ export default function ExplorePage() {
       }
     }
 
+    // Load static db.json first (always has content when deployed). API is in-memory and often empty on Vercel/cold start.
+    const loadFromStatic = () =>
+      fetch('/db.json')
+        .then((res) => (res.ok ? res.json() : Promise.reject(new Error('No static data'))))
+        .then(applyBlogs)
+        .catch(() => {})
+
+    // Optionally merge in API blogs (e.g. newly published in same session locally)
     const loadFromApi = () =>
       fetch('/api/blogs')
         .then((res) => (res.ok ? res.json() : Promise.reject(new Error('API error'))))
         .then((data) => {
-          if (data?.blogs?.length) {
-            applyBlogs(data)
-            return true
-          }
-          return false
+          if (data?.blogs?.length) applyBlogs(data)
         })
+        .catch(() => {})
 
-    const loadFromStatic = () => fetch('/db.json').then((res) => res.json()).then(applyBlogs)
-
-    loadFromApi()
-      .then((hadBlogs) => {
-        if (!hadBlogs) return loadFromStatic()
-      })
-      .catch(() => loadFromStatic())
-      .catch(console.error)
-      .finally(() => setLoading(false))
+    Promise.all([loadFromStatic(), loadFromApi()]).finally(() => setLoading(false))
   }, [])
 
   const featured = blogs[0]

@@ -1,21 +1,21 @@
-export function createBlog(blog, isPublish) {
-  if (!isPublish) {
-    alert('Draft saved locally')
-    return
+export async function createBlog(blog, isPublish) {
+  if (isPublish) {
+    try {
+      await fetch('/api/blogs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(blog),
+      })
+
+      if (!res.ok) {
+        throw new Error('Failed to publish blog')
+      }
+
+      alert('Blog published!')
+    } catch (err) {
+      alert(err.message)
+    }
+  } else {
+    alert('Draft saved (local only)')
   }
-
-  const existingBlogs = JSON.parse(localStorage.getItem('blogs')) || []
-
-  const newBlog = {
-    ...blog,
-    id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  }
-
-  existingBlogs.push(newBlog)
-
-  localStorage.setItem('blogs', JSON.stringify(existingBlogs))
-
-  alert('Blog published successfully!')
 }

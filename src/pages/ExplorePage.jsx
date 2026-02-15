@@ -17,9 +17,10 @@ export default function ExplorePage() {
   // Sort theo mới nhất
   const sortedBlogs = [...blogs].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
 
-  const featured = sortedBlogs[0]
-  const secondary = sortedBlogs.slice(1, 4)
-  const others = sortedBlogs.slice(4)
+  const featured = blogs.length > 0 ? blogs[0] : null
+  const secondary = blogs.length > 1 ? blogs.slice(1, 4) : []
+  const others = blogs.length > 4 ? blogs.slice(4) : []
+
   if (!featured) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>
   }

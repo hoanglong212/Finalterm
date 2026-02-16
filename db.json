@@ -239,16 +239,6 @@
       "status": "published",
       "createdAt": "2026-02-15T19:00:00.000Z",
       "updatedAt": "2026-02-15T19:00:00.000Z"
-    },
-    {
-      "title": "aaaaaaaaaaaaaaaaaaaaa",
-      "category": "Sport",
-      "thumbnail": "",
-      "content": "a",
-      "status": "published",
-      "createdAt": "2026-02-15T20:31:18.694Z",
-      "updatedAt": "2026-02-15T20:31:18.694Z",
-      "id": "3915fc87-66b5-40ef-9f77-e34161c81176"
     }
   ]
 }

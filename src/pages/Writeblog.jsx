@@ -63,7 +63,6 @@ export default function WriteBlog() {
         <button
           onClick={() => {
             navigate('/')
-            logout()
           }}
           className="mb-10 text-red-600 hover:text-red-700 tracking-widest font-medium"
         >

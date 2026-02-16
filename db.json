@@ -1,16 +1,6 @@
 {
   "blogs": [
     {
-      "id": "1001",
-      "title": "Global Markets Rally After Fed Announcement",
-      "category": "Business",
-      "thumbnail": "https://picsum.photos/600/400?random=1",
-      "content": "Stock markets surged worldwide after the Federal Reserve signaled rate cuts later this year.",
-      "status": "published",
-      "createdAt": "2026-02-10T08:00:00.000Z",
-      "updatedAt": "2026-02-10T08:00:00.000Z"
-    },
-    {
       "id": "1002",
       "title": "New Education Reform Bill Passed",
       "category": "Education",
@@ -188,7 +178,7 @@
       "content": "High-end tourism sees record bookings worldwide.",
       "status": "published",
       "createdAt": "2026-02-15T14:00:00.000Z",
-      "updatedAt": "2026-02-15T14:00:00.000Z"
+      "updatedAt": "2026-02-16T00:29:37.028Z"
     },
     {
       "id": "1020",

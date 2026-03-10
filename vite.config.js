@@ -1,8 +1,9 @@
+import { randomUUID } from 'node:crypto'
+import fs from 'node:fs'
+import path from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import fs from 'node:fs'
-import path from 'node:path'
 
 const DB_PATH = path.join(process.cwd(), 'db.json')
 
@@ -19,12 +20,42 @@ function saveDb(data) {
   fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8')
 }
 
+function parseBody(req) {
+  return new Promise((resolve, reject) => {
+    let body = ''
+
+    req.on('data', (chunk) => {
+      body += chunk
+    })
+
+    req.on('end', () => {
+      if (!body) {
+        resolve({})
+        return
+      }
+
+      try {
+        resolve(JSON.parse(body))
+      } catch {
+        reject(new Error('Invalid JSON'))
+      }
+    })
+
+    req.on('error', reject)
+  })
+}
+
 function apiBlogsPlugin() {
   return {
     name: 'api-blogs',
     configureServer(server) {
-      const handler = (req, res, next) => {
-        if (req.url !== '/api/blogs' || (req.method !== 'GET' && req.method !== 'POST')) {
+      const handler = async (req, res, next) => {
+        const reqUrl = new URL(req.url || '/', 'http://localhost')
+        const isBlogsCollection = reqUrl.pathname === '/api/blogs'
+        const detailMatch = reqUrl.pathname.match(/^\/api\/blogs\/([^/]+)$/)
+        const blogId = detailMatch ? decodeURIComponent(detailMatch[1]) : null
+
+        if (!isBlogsCollection && !blogId) {
           return next()
         }
 
@@ -34,34 +65,96 @@ function apiBlogsPlugin() {
           res.end(JSON.stringify(body))
         }
 
-        if (req.method === 'GET') {
+        if (req.method === 'GET' && isBlogsCollection) {
           const db = loadDb()
-          return send(200, { blogs: db.blogs || [] })
+          send(200, db.blogs || [])
+          return
         }
 
-        // POST: read body then handle
-        let body = ''
-        req.on('data', (chunk) => { body += chunk })
-        req.on('end', () => {
+        if (req.method === 'GET' && blogId) {
+          const db = loadDb()
+          const blog = (db.blogs || []).find((item) => String(item.id) === String(blogId))
+
+          if (!blog) {
+            send(404, { message: 'Blog not found' })
+            return
+          }
+
+          send(200, blog)
+          return
+        }
+
+        if (req.method === 'POST' && isBlogsCollection) {
           try {
-            const parsed = body ? JSON.parse(body) : {}
             const db = loadDb()
-            db.blogs = db.blogs || []
+            const body = await parseBody(req)
+            const now = new Date().toISOString()
             const newBlog = {
-              ...parsed,
-              id: crypto.randomUUID(),
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
+              ...body,
+              id: body.id || randomUUID(),
+              createdAt: body.createdAt || now,
+              updatedAt: now,
             }
+
+            db.blogs = db.blogs || []
             db.blogs.push(newBlog)
             saveDb(db)
-            send(200, newBlog)
-          } catch (err) {
-            send(400, { message: err.message || 'Bad request' })
+
+            send(201, newBlog)
+          } catch (error) {
+            send(400, { message: error.message || 'Bad request' })
           }
-        })
+          return
+        }
+
+        if (req.method === 'PUT' && blogId) {
+          try {
+            const db = loadDb()
+            const body = await parseBody(req)
+            const index = (db.blogs || []).findIndex((item) => String(item.id) === String(blogId))
+
+            if (index === -1) {
+              send(404, { message: 'Blog not found' })
+              return
+            }
+
+            const existingBlog = db.blogs[index]
+            const updatedBlog = {
+              ...existingBlog,
+              ...body,
+              id: existingBlog.id,
+              createdAt: existingBlog.createdAt,
+              updatedAt: new Date().toISOString(),
+            }
+
+            db.blogs[index] = updatedBlog
+            saveDb(db)
+
+            send(200, updatedBlog)
+          } catch (error) {
+            send(400, { message: error.message || 'Bad request' })
+          }
+          return
+        }
+
+        if (req.method === 'DELETE' && blogId) {
+          const db = loadDb()
+          const index = (db.blogs || []).findIndex((item) => String(item.id) === String(blogId))
+
+          if (index === -1) {
+            send(404, { message: 'Blog not found' })
+            return
+          }
+
+          const [deletedBlog] = db.blogs.splice(index, 1)
+          saveDb(db)
+          send(200, deletedBlog)
+          return
+        }
+
+        send(405, { message: 'Method not allowed' })
       }
-      // Run before proxy so /api/blogs is handled by us
+
       server.middlewares.stack.unshift({ route: '', handle: handler })
     },
   }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { BLOG_CATEGORIES } from '../constants/categories'
+import { getBlogById, updateBlog } from '../services/blogApi'
 
 export default function BlogPreviewPage() {
   const { id } = useParams()
@@ -8,80 +9,126 @@ export default function BlogPreviewPage() {
 
   const [blog, setBlog] = useState(null)
   const [isEditing, setIsEditing] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_ENDPOINT}/blogs/${id}`)
-      .then((res) => res.json())
-      .then((data) => setBlog(data))
+    const loadBlog = async () => {
+      setIsLoading(true)
+      setError('')
+
+      try {
+        const blogData = await getBlogById(id)
+        setBlog(blogData)
+      } catch (loadError) {
+        setError(loadError.message || 'Could not load this blog')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadBlog()
   }, [id])
 
   const handleSave = async () => {
-    await fetch(`${import.meta.env.VITE_API_ENDPOINT}/blogs/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...blog,
-        updatedAt: new Date().toISOString(),
-      }),
-    })
+    if (!blog?.title?.trim() || !blog?.content?.trim()) {
+      window.alert('Title and content are required.')
+      return
+    }
 
-    setIsEditing(false)
+    setIsSaving(true)
+    setError('')
+
+    try {
+      const payload = {
+        ...blog,
+        title: blog.title.trim(),
+        content: blog.content.trim(),
+        thumbnail: (blog.thumbnail || '').trim(),
+        updatedAt: new Date().toISOString(),
+      }
+
+      const updatedBlog = await updateBlog(id, payload)
+      setBlog(updatedBlog)
+      setIsEditing(false)
+    } catch (saveError) {
+      setError(saveError.message || 'Could not save changes')
+    } finally {
+      setIsSaving(false)
+    }
   }
 
-  if (!blog) return <div className="p-10 text-center">Loading...</div>
+  if (isLoading) {
+    return <div className="p-10 text-center">Loading...</div>
+  }
+
+  if (error && !blog) {
+    return (
+      <div className="min-h-screen bg-gray-50 px-6 py-16 text-center">
+        <p className="text-red-600 mb-6">{error}</p>
+        <button onClick={() => navigate('/explore')} className="border px-6 py-3 tracking-widest">
+          BACK
+        </button>
+      </div>
+    )
+  }
+
+  if (!blog) {
+    return <div className="p-10 text-center">Blog not found.</div>
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-6">
       <div className="max-w-4xl mx-auto bg-white shadow-sm px-12 py-16">
-        {/* 🔴 EDIT MODE */}
+        {error && <p className="text-red-600 mb-6">{error}</p>}
+
         {isEditing ? (
           <>
-            {/* CATEGORY */}
             <select
               value={blog.category}
-              onChange={(e) => setBlog({ ...blog, category: e.target.value })}
+              onChange={(event) => setBlog({ ...blog, category: event.target.value })}
               className="border mb-6 px-4 py-2"
             >
-              {BLOG_CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
+              {BLOG_CATEGORIES.map((category) => (
+                <option key={category} value={category}>
+                  {category}
                 </option>
               ))}
             </select>
 
-            {/* TITLE */}
             <input
               value={blog.title}
-              onChange={(e) => setBlog({ ...blog, title: e.target.value })}
+              onChange={(event) => setBlog({ ...blog, title: event.target.value })}
               className="w-full text-4xl font-serif font-bold border-b pb-4 mb-8 outline-none"
             />
 
-            {/* THUMBNAIL */}
             <input
               value={blog.thumbnail || ''}
-              onChange={(e) => setBlog({ ...blog, thumbnail: e.target.value })}
+              onChange={(event) => setBlog({ ...blog, thumbnail: event.target.value })}
               placeholder="Thumbnail URL"
               className="w-full border px-4 py-2 mb-6"
             />
 
-            {/* CONTENT */}
             <textarea
               rows={14}
               value={blog.content}
-              onChange={(e) => setBlog({ ...blog, content: e.target.value })}
+              onChange={(event) => setBlog({ ...blog, content: event.target.value })}
               className="w-full border p-4 leading-relaxed resize-none"
             />
 
             <div className="flex gap-6 mt-10">
               <button
                 onClick={handleSave}
-                className="bg-black text-white px-8 py-3 tracking-widest hover:bg-red-600 transition"
+                disabled={isSaving}
+                className="bg-black text-white px-8 py-3 tracking-widest hover:bg-red-600 transition disabled:opacity-60"
               >
-                SAVE
+                {isSaving ? 'SAVING...' : 'SAVE'}
               </button>
 
               <button
                 onClick={() => setIsEditing(false)}
+                disabled={isSaving}
                 className="border px-8 py-3 tracking-widest"
               >
                 CANCEL
@@ -90,29 +137,20 @@ export default function BlogPreviewPage() {
           </>
         ) : (
           <>
-            {/* 📰 PREVIEW MODE */}
-
-            {/* CATEGORY */}
             <p className="text-red-600 tracking-widest uppercase text-sm font-semibold mb-6 text-center">
               {blog.category}
             </p>
 
-            {/* TITLE */}
-            <h1 className="text-5xl font-serif font-bold text-center leading-tight mb-8">
-              {blog.title}
-            </h1>
+            <h1 className="text-5xl font-serif font-bold text-center leading-tight mb-8">{blog.title}</h1>
 
-            {/* META */}
             <p className="text-gray-400 text-center text-sm mb-10">
               Last updated {new Date(blog.updatedAt).toLocaleDateString()}
             </p>
 
-            {/* IMAGE */}
             {blog.thumbnail && (
-              <img src={blog.thumbnail} alt="" className="w-full h-[500px] object-cover mb-12" />
+              <img src={blog.thumbnail} alt={blog.title} className="w-full h-[500px] object-cover mb-12" />
             )}
 
-            {/* CONTENT */}
             <div className="prose max-w-none text-lg leading-relaxed whitespace-pre-line text-gray-800">
               {blog.content}
             </div>
@@ -125,10 +163,7 @@ export default function BlogPreviewPage() {
                 EDIT STORY
               </button>
 
-              <button
-                onClick={() => navigate('/explore')}
-                className="border px-8 py-3 tracking-widest"
-              >
+              <button onClick={() => navigate('/explore')} className="border px-8 py-3 tracking-widest">
                 BACK
               </button>
             </div>

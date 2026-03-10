@@ -6,14 +6,12 @@
  *  onDelete?: (id: string) => void
  * }}
  */
-export default function BlogCard({ blog, variant = 'grid', onEdit, onDelete }) {
-  if (!blog) return null
-
-  const ActionButtons = () => (
+function BlogCardActions({ blogId, onEdit, onDelete }) {
+  return (
     <div className="absolute top-2 right-2 flex gap-2 z-20">
       {onEdit && (
         <button
-          onClick={() => onEdit(blog.id)}
+          onClick={() => onEdit(blogId)}
           className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700"
         >
           Edit
@@ -21,7 +19,7 @@ export default function BlogCard({ blog, variant = 'grid', onEdit, onDelete }) {
       )}
       {onDelete && (
         <button
-          onClick={() => onDelete(blog.id)}
+          onClick={() => onDelete(blogId)}
           className="text-xs bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
         >
           Delete
@@ -29,11 +27,15 @@ export default function BlogCard({ blog, variant = 'grid', onEdit, onDelete }) {
       )}
     </div>
   )
+}
+
+export default function BlogCard({ blog, variant = 'grid', onEdit, onDelete }) {
+  if (!blog) return null
 
   if (variant === 'featured') {
     return [
       <div key="img" className="md:col-span-2 relative group overflow-hidden">
-        <ActionButtons />
+        <BlogCardActions blogId={blog.id} onEdit={onEdit} onDelete={onDelete} />
 
         {blog.thumbnail && (
           <img
@@ -59,7 +61,7 @@ export default function BlogCard({ blog, variant = 'grid', onEdit, onDelete }) {
   if (variant === 'secondary') {
     return (
       <article className="relative group border border-gray-200 bg-white overflow-hidden hover:shadow-lg transition">
-        <ActionButtons />
+        <BlogCardActions blogId={blog.id} onEdit={onEdit} onDelete={onDelete} />
 
         <div className="relative overflow-hidden aspect-[16/10]">
           {blog.thumbnail && (
@@ -81,7 +83,7 @@ export default function BlogCard({ blog, variant = 'grid', onEdit, onDelete }) {
   // GRID
   return (
     <article className="relative group border border-gray-200 bg-white overflow-hidden hover:shadow-md transition">
-      <ActionButtons />
+      <BlogCardActions blogId={blog.id} onEdit={onEdit} onDelete={onDelete} />
 
       <div className="relative overflow-hidden aspect-video">
         {blog.thumbnail && (

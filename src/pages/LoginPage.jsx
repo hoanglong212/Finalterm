@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { login } from '../auth'
+import { loginWithCredentials } from '../auth'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -10,16 +10,14 @@ export default function LoginPage() {
   const [error, setError] = useState('')
 
   const handleLogin = () => {
-    const users = JSON.parse(localStorage.getItem('users')) || []
+    setError('')
 
-    const foundUser = users.find((user) => user.email === email && user.password === password)
-
-    if (!foundUser) {
-      setError('Invalid email or password')
+    const result = loginWithCredentials(email, password)
+    if (!result.ok) {
+      setError(result.message)
       return
     }
 
-    login(foundUser)
     navigate('/write')
   }
 
@@ -35,7 +33,7 @@ export default function LoginPage() {
           type="email"
           placeholder="Your email address"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(event) => setEmail(event.target.value)}
           className="w-full px-6 py-5 bg-gray-200 text-black text-lg outline-none"
         />
 
@@ -43,7 +41,7 @@ export default function LoginPage() {
           type="password"
           placeholder="Your password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
           className="w-full px-6 py-5 bg-gray-200 text-black text-lg outline-none"
         />
 
@@ -56,14 +54,11 @@ export default function LoginPage() {
           LOGIN
         </button>
 
-        {/* <p className="text-gray-500 text-sm text-center">
-          Don’t have an account? Go back and subscribe.
-        </p> */}
         <button
           onClick={() => navigate('/')}
-          className="mb-10 text-red-600 hover:text-red-700 tracking-widest font-medium"
+          className="text-red-600 hover:text-red-700 tracking-widest font-medium"
         >
-          ← BACK TO HOME
+          BACK TO HOME
         </button>
       </div>
     </div>

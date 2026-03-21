@@ -1,16 +1,19 @@
+import missionImage from '../assets/mission.jpg'
+
 const POINTS = [
   { title: 'Independent', desc: 'Free from corporate influence and political bias' },
   { title: 'Investigative', desc: 'Deep-dive reporting that uncovers the truth' },
   { title: 'Inclusive', desc: 'Diverse voices and perspectives from around the globe' },
 ]
 
-// Inline SVG — no image request, no 404. To use a photo, add public/mission.jpg and use <img src="/mission.jpg" alt="Our mission" className="w-full h-auto grayscale object-cover min-h-[280px]" />
 const MissionPlaceholder = () => (
   <div className="w-full min-h-[280px] bg-gray-200 flex items-center justify-center grayscale">
     <img
-      src="/mission.jpg"
+      src={missionImage}
       alt="Our mission"
       className="w-full h-auto min-h-[280px] object-cover"
+      loading="lazy"
+      decoding="async"
     />
   </div>
 )

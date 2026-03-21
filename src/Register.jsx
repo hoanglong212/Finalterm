@@ -1,26 +1,28 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { login, registerUser } from './auth'
 
 export default function SubscribeForm() {
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleSubmit = () => {
-    if (!email || !password) {
-      alert('Please fill all fields')
+    setError('')
+
+    const result = registerUser({ email, password })
+
+    if (!result.ok) {
+      setError(result.message)
       return
     }
 
-    const user = { email, password }
-
-    const existingUsers = JSON.parse(localStorage.getItem('users')) || []
-
-    existingUsers.push(user)
-
-    localStorage.setItem('users', JSON.stringify(existingUsers))
-
-    alert('User saved!')
+    login(result.user)
     setEmail('')
     setPassword('')
+    navigate('/write')
   }
 
   return (
@@ -29,7 +31,7 @@ export default function SubscribeForm() {
         type="email"
         placeholder="Your email address"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(event) => setEmail(event.target.value)}
         className="w-full px-6 py-5 bg-gray-200 text-black text-lg outline-none"
       />
 
@@ -37,9 +39,11 @@ export default function SubscribeForm() {
         type="password"
         placeholder="Password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(event) => setPassword(event.target.value)}
         className="w-full px-6 py-5 bg-gray-200 text-black text-lg outline-none"
       />
+
+      {error && <p className="text-red-400 text-sm text-left">{error}</p>}
 
       <button
         onClick={handleSubmit}

@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: 'English Towney';
-  src: url('/src/assets/font/EnglishTowne.ttf') format('truetype');
+  src: url('./assets/font/EnglishTowne.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

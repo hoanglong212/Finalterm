@@ -16,7 +16,7 @@ export default function SiteFooter() {
           </ul>
         </div>
         <div className="border-t border-gray-300 pt-8 flex flex-col md:flex-row md:justify-between md:items-center gap-6 text-sm text-gray-600">
-          <p>Â© 2026 The Honest Stories Teller. All rights reserved.</p>
+          <p>© 2026 The Honest Stories Teller. All rights reserved.</p>
           <div className="flex gap-8">
             {socials.map((name) => (
               <span key={name} className="hover:text-red-600 cursor-pointer">

@@ -19,4 +19,3 @@ export default function HomePage() {
     </div>
   )
 }
-console.log('HOME PAGE NEW VERSION')
